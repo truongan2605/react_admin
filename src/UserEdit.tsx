@@ -46,7 +46,7 @@ const CustomToolbar = (proops: any) => {
 
 const UserEdit = (props: any) => (
   <Edit {...props}>
-    <SimpleForm>
+    <SimpleForm toolbar={<CustomToolbar />}>
       <TextInput label="Full Name" source="name" validate={validateRequired} />
       <TextInput label="Company" source="company" validate={validateRequired} />
       <TextInput label="Email" source="email" validate={validateEmail} />

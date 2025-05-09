@@ -7,6 +7,8 @@ const materialChoices = [
   { id: 'Plastic', name: 'Plastic' },
 ];
 
+const validateRequired = required('Trường này là bắt buộc');
+
 const ProductCreate = () => (
   <Create>
     <SimpleForm>
@@ -16,10 +18,10 @@ const ProductCreate = () => (
       <Box sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2, mb: 2 }}>
         <Grid container spacing={5}>
           <Grid size={{ xs: 12, md: 6 }} >
-            <TextInput source="name" fullWidth label="Tên sản phẩm" />
+            <TextInput source="name" fullWidth label="Tên sản phẩm" validate={validateRequired}/>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
-            <TextInput source="product" fullWidth label="Loại sản phẩm" />
+            <TextInput source="product" fullWidth label="Loại sản phẩm" validate={validateRequired}/>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <SelectInput
