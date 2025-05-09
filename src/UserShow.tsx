@@ -16,7 +16,6 @@ import {
     CircularProgress,
     Alert,
     Box,
-    Avatar,
 } from '@mui/material';
 
 const ProductListForUser = () => {

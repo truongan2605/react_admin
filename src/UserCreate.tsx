@@ -24,7 +24,7 @@ const UserCreate = (props: any) => (
       <TextInput label="Email" source="email" validate={validateEmail} />
       <TextInput label="City" source="city" validate={validateRequired} />
       <TextInput label="Country" source="country" validate={validateRequired} />
-      <TextInput label="Zip Code" source="zipCode" validate={validateNumber}/> 
+      <NumberInput label="Zip Code" source="zipCode" validate={validateNumber}/> 
       <TextInput label="Avatar URL" source="avatar" validate={validateURL}/> 
     </SimpleForm>
   </Create>
