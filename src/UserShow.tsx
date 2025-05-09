@@ -4,6 +4,9 @@ import {
     Tab,
     TextField as RaTextField,
     useGetMany,
+    EmailField,
+    DateField,
+    ImageField,
 } from 'react-admin';
 import {
     Card,
@@ -13,6 +16,7 @@ import {
     CircularProgress,
     Alert,
     Box,
+    Avatar,
 } from '@mui/material';
 
 const ProductListForUser = () => {
@@ -57,6 +61,15 @@ const UserShow = () => (
                 <RaTextField source="id" />
                 <RaTextField source="name" />
                 <RaTextField source="company" />
+                <EmailField source="email" />
+                <RaTextField source="city" />
+                <RaTextField source="country" />
+                <RaTextField source="zipCode" />
+                <DateField source="createdAt" label="Ngày tạo" />
+                <Box sx={{ mt: 2 }}>
+                    <Typography variant="subtitle1">Avatar:</Typography>
+                    <ImageField source="avatar" title="Avatar"  />
+                </Box>
             </Tab>
             <Tab label="Sản phẩm cố định">
                 <ProductListForUser />
