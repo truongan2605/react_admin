@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Admin, CustomRoutes, Resource } from 'react-admin';
-import { BrowserRouter, Route } from 'react-router-dom';
+import {  Route } from 'react-router-dom';
 import dataProvider from './dataProvider';
 import { UserList } from './UserList';
 import UserEdit from './UserEdit';
@@ -17,8 +17,6 @@ import CustomLayout from './CustomLayout';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-
       <Admin
         dataProvider={dataProvider}
         dashboard={Dashboard}
@@ -44,10 +42,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
       </Admin>
 
-
-
-
-    </BrowserRouter>
   </React.StrictMode>
-  // test thử tí 123
 );

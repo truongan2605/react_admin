@@ -5,6 +5,10 @@ import {
     useShowContext,
     useGetMany,
     DateField,
+    useNotify,
+    useRedirect,
+    useRecordContext,
+    DeleteWithConfirmButton
 } from 'react-admin';
 import {
     Grid,
@@ -19,17 +23,24 @@ import {
     Alert,
     Card,
     CardContent,
+
 } from '@mui/material';
+
+
+
 
 const UserKindredInfo = () => {
     const { record } = useShowContext();
+    const notify = useNotify();
+    const redirect = useRedirect();
 
     if (!record) return <CircularProgress />;
+
 
     return (
         <Grid container spacing={4} padding={3}>
             {/* Cột trái */}
-            <Grid size={{xs:12,md:5}} >
+            <Grid size={{ xs: 12, md: 5 }} >
                 <Box display="flex" flexDirection="column" gap={2}>
                     <img
                         src={record.avatar}
@@ -40,12 +51,12 @@ const UserKindredInfo = () => {
                             objectFit: 'cover',
                         }}
                     />
-                    
+
                 </Box>
             </Grid>
-            
+
             {/* Cột phải */}
-            <Grid size={{xs:12,md:7}} >
+            <Grid size={{ xs: 4, md: 7 }} >
                 <Typography variant="h4" gutterBottom>
                     {record.name}
                 </Typography>
@@ -94,6 +105,30 @@ const UserKindredInfo = () => {
                     </Typography>
                 </Box>
             </Grid>
+
+            <Grid size={{ xs: 12, md: 5 }}>
+                <DeleteWithConfirmButton resource='users'
+                    record={record}
+                    mutationOptions={
+                        {
+                            onSuccess: () => {
+                                notify('Xoá thành công', { type: 'success' });
+                                redirect('/users');
+                            },
+                            onError: () => {
+                                notify('Lỗi khi xoá');
+                            }
+                        }
+                    }
+                    confirmTitle="Xác nhận xoá"
+                    confirmContent="Bạn chắc chắn muốn xoá chứ"
+                    label='Xoá người dùng'
+                    sx={{ mt: 2 }}
+
+                />
+
+
+            </Grid>
         </Grid>
     );
 };
@@ -108,7 +143,7 @@ const ProductListForUser = () => {
     return (
         <Grid container spacing={2}>
             {data.map((product) => (
-                <Grid size={{xs:12,md:6}}  key={product.id}>
+                <Grid size={{ xs: 12, md: 6 }} key={product.id}>
                     <Card variant="outlined">
                         <CardContent>
                             <Typography variant="h6" gutterBottom>

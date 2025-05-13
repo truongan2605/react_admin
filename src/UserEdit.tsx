@@ -10,6 +10,8 @@ import {
     required,
     email,
     number,
+    useNotify,
+    useRecordContext,
 } from 'react-admin';
 
 const validateRequired = required('Trường này là bắt buộc');
@@ -20,26 +22,33 @@ const validateURL = (value: string) => {
     return value && !urlPattern.test(value) ? 'URL không hợp lệ' : undefined;
 };
 
-const CustomToolbar = (proops: any) => {
+const CustomToolbar = (props: any) => {
     const redirect = useRedirect();
+    const  record  = useRecordContext();
+    const notify = useNotify();
 
     return (
-        <Toolbar {...proops}>
+        <Toolbar {...props}>
             <SaveButton />
-            <DeleteWithConfirmButton
-                mutationOptions={{
-                    onSuccess: () => {
-                        alert('Xoá thành công');
-                        redirect('/users');
-                    },
-                    onError: () => {
-                        alert('Lỗi khi xoá');
-
-                    }
-                }}
-                confirmTitle="Bạn có chắc chắn muốn xoá không?"
-                confirmContent="Dữ liệu sẽ không thể khôi phục lại"
-            />
+            {record && (
+                <DeleteWithConfirmButton 
+                    resource="users"
+                    record={record}
+                    mutationOptions={{
+                        onSuccess: () => {
+                            notify('Xoá thành công', { type: 'success' });
+                            redirect('/users');
+                        },
+                        onError: () => {
+                            notify('Lỗi khi xoá', { type: 'error' });
+                        },
+                    }}
+                    confirmTitle="Xác nhận xoá"
+                    confirmContent="Bạn chắc chắn muốn xoá chứ"
+                    label="Xoá người dùng"
+                    
+                />
+            )}
         </Toolbar>
     );
 };
