@@ -12,7 +12,6 @@ import ProductCreate from './ProductCreate';
 import Dashboard from './Dashboard';
 import UserShow from './UserShow';
 import Profile from './Profile';
-import CustomMenu from './Menu';
 import CustomLayout from './CustomLayout';
 
 

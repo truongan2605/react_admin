@@ -1,4 +1,4 @@
-import { Menu, MenuItemLink, useSidebarState } from "react-admin";
+import { Menu, MenuItemLink } from "react-admin";
 import PersonIcon from '@mui/icons-material/Person';
 import GroupIcon from '@mui/icons-material/Group';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -6,7 +6,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useLocation } from "react-router-dom";
 
 const CustomMenu = () => {
-    const [open] = useSidebarState();
     const location = useLocation();
 
 return (
