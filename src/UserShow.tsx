@@ -7,7 +7,6 @@ import {
     DateField,
     useNotify,
     useRedirect,
-    useRecordContext,
     DeleteWithConfirmButton
 } from 'react-admin';
 import {
