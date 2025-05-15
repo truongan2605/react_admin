@@ -1,5 +1,23 @@
-import { Card, CardContent, Typography, Box, Grid } from '@mui/material';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  Card,
+  Typography,
+  Box,
+  Grid,
+  useTheme,
+  LinearProgress,
+  Stack,
+  CardContent,
+  // Tooltip,
+} from '@mui/material';
+import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+
+const Categories = [
+  { label: 'Food and Drinks', value: 872400, color: '#4caf50' },
+  { label: 'Shopping', value: 1378200, color: '#2196f3' },
+  { label: 'Housing', value: 928500, color: '#ff9800' },
+  { label: 'Transportation', value: 420700, color: '#9c27b0' },
+  { label: 'Vehicle', value: 520000, color: '#f44336' },
+];
 
 const productData = [
   { name: 'Product A', price: 100, quantity: 2400 },
@@ -9,92 +27,129 @@ const productData = [
   { name: 'Product E', price: 300, quantity: 3908 },
 ];
 
-// Tính doanh thu cho từng sản phẩm
-const salesData = productData.map(product => ({
+const salesData = productData.map((product) => ({
   ...product,
-  revenue: product.price * product.quantity, // Doanh thu = price * quantity
+  revenue: product.price * product.quantity,
 }));
 
-// Tính tổng doanh thu
 const totalRevenue = salesData.reduce((acc, product) => acc + product.revenue, 0);
+const bestSellingProduct = salesData.reduce((max, product) =>
+  product.revenue > max.revenue ? product : max
+);
+const leastSellingProduct = salesData.reduce((min, product) =>
+  product.revenue < min.revenue ? product : min
+);
 
-// Xác định sản phẩm bán chạy nhất và bán ít nhất
-const bestSellingProduct = salesData.reduce((max, product) => (product.revenue > max.revenue ? product : max), salesData[0]);
-const leastSellingProduct = salesData.reduce((min, product) => (product.revenue < min.revenue ? product : min), salesData[0]);
-
-// Chuyển salesData thành dạng dữ liệu phù hợp với Recharts
-const chartData = salesData.map(product => ({
+const chartData = salesData.map((product) => ({
   name: product.name,
   sales: product.revenue,
 }));
 
-const Dashboard = () => (
-  <Box m={2}>
-    <Typography variant="h4" gutterBottom>
-      Trang chủ
-    </Typography>
+const Dashboard = () => {
+  const theme = useTheme();
 
-    <Grid container spacing={3}>
-      {/* Tổng doanh thu */}
-      <Grid size={{ xs: 12, md: 10 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Doanh thu tổng cộng
-            </Typography>
-            <Typography variant="h4">${totalRevenue}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(value);
 
-      {/* Sản phẩm bán chạy nhất */}
-      <Grid size={{ xs: 12, md: 5 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Sản phẩm bán chạy nhất
-            </Typography>
-            <Typography variant="h5">{bestSellingProduct.name}</Typography>
-            <Typography variant="body1">Doanh thu: ${bestSellingProduct.revenue}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+  return (
+    <Box p={3}>
+      <Typography variant="h4" mb={3}>
+        Expenses
+      </Typography>
 
-      {/* Sản phẩm bán ít nhất */}
-      <Grid size={{ xs: 12, md: 5 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Sản phẩm bán ít nhất
-            </Typography>
-            <Typography variant="h5">{leastSellingProduct.name}</Typography>
-            <Typography variant="body1">Doanh thu: ${leastSellingProduct.revenue}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+      <Grid container spacing={3}>
 
-      {/* Biểu đồ doanh thu */}
-      <Grid size={{ xs: 12, md: 10 }}>
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Doanh số sản phẩm
-            </Typography>
-            <Box height={400}>
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="sales" fill="#1976d2" />
-                </BarChart>
-              </ResponsiveContainer>
+        <Grid size={{ xs: 12, md: 10 }}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Doanh số sản phẩm
+              </Typography>
+              <Box height={400}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={chartData}>
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="sales" fill="#1976d2" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+
+        {/* Cột trái: Thẻ doanh thu */}
+        <Grid size={{ xs: 12, md: 5 }} >
+          <Stack spacing={2}>
+            <Card sx={{ p: 2 }}>
+              <Typography variant="subtitle2" color="text.secondary" mb={1}>
+                Tổng doanh thu
+              </Typography>
+              <Typography variant="h5" color={theme.palette.success.main}>
+                {formatCurrency(totalRevenue)}
+              </Typography>
+            </Card>
+
+            <Card sx={{ p: 2 }}>
+              <Typography variant="subtitle2" color="text.secondary" mb={1}>
+                Bán chạy nhất
+              </Typography>
+              <Typography variant="h6" color={theme.palette.warning.main}>
+                {bestSellingProduct.name}
+              </Typography>
+              <Typography>{formatCurrency(bestSellingProduct.revenue)}</Typography>
+            </Card>
+
+            <Card sx={{ p: 2 }}>
+              <Typography variant="subtitle2" color="text.secondary" mb={1}>
+                Bán ít nhất
+              </Typography>
+              <Typography variant="h6" color={theme.palette.error.main}>
+                {leastSellingProduct.name}
+              </Typography>
+              <Typography>{formatCurrency(leastSellingProduct.revenue)}</Typography>
+            </Card>
+          </Stack>
+        </Grid>
+
+        {/* Cột giữa: Where your money go */}
+        <Grid size={{ xs: 12, md: 5 }} >
+          <Typography variant="h6" gutterBottom>
+            Where your money go?
+          </Typography>
+
+          {Categories.map((cat) => (
+            <Box key={cat.label} mb={1}>
+              <Box display="flex" justifyContent="space-between">
+                <Typography variant="body2">{cat.label}</Typography>
+                <Typography variant="body2">{cat.value.toLocaleString()}</Typography>
+              </Box>
+              <LinearProgress
+                variant="determinate"
+                value={(cat.value / 1500000) * 100}
+                sx={{
+                  height: 8,
+                  borderRadius: 5,
+                  backgroundColor: '#eee',
+                  '& .MuiLinearProgress-bar': {
+                    backgroundColor: cat.color,
+                  },
+                }}
+              />
             </Box>
-          </CardContent>
-        </Card>
+          ))}
+        </Grid>
+
+        {/* Cột phải: Biểu đồ doanh thu */}
+
       </Grid>
-    </Grid>
-  </Box>
-);
+    </Box>
+  );
+};
 
 export default Dashboard;

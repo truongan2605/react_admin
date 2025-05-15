@@ -8,15 +8,15 @@ const dataProvider: DataProvider = {
     const data = await response.json();
 
     const { page = 1, perPage = 10 } = params.pagination || {};
-    const { field = 'id', order = 'DESC' } = params.sort || {};
+    const { field = 'id', order = 'ASC' } = params.sort || {};
 
 
     const sortedData = [...data].sort((a, b) => {
       const aValue = field === 'id' ? Number(a[field]) : a[field];
       const bValue = field === 'id' ? Number(b[field]) : b[field];
 
-      if (aValue < bValue) return order === 'DESC' ? -1 : 1;
-      if (aValue > bValue) return order === 'DESC' ? 1 : -1;
+      if (aValue < bValue) return order === 'ASC' ? 1 : -1;
+      if (aValue > bValue) return order === 'ASC' ? -1 : 1;
       return 0;
     });
 
