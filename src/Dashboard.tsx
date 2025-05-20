@@ -56,9 +56,7 @@ const Dashboard = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" mb={3}>
-        Expenses
-      </Typography>
+      
 
       <Grid container spacing={3}>
 

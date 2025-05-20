@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Box, Avatar, CircularProgress, Alert, Divider } from "@mui/material";
+import { Card, CardContent, Typography, Box, Avatar, CircularProgress, Alert } from "@mui/material";
 import { useGetOne } from "react-admin";
 
 const Profile = () =>{

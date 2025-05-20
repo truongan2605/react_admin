@@ -4,6 +4,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { useLocation } from "react-router-dom";
+import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 
 const CustomMenu = () => {
     const location = useLocation();
@@ -44,6 +45,14 @@ return (
             primaryText="Profile"
             leftIcon={<PersonIcon />}
             selected={location.pathname.startsWith('/profile')}
+
+        />
+
+        <MenuItemLink
+            to="/videos"
+            primaryText="Video"
+            leftIcon={<OndemandVideoIcon />}
+            selected={location.pathname.startsWith('/video')}
 
         />
     </Menu>
